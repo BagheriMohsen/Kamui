@@ -1,0 +1,16 @@
+{
+    "name": "mohsenbagheri/kamui",
+    "description": "This service helps you to move your data between services",
+    "autoload": {
+        "psr-4": {
+            "Mohsenbagheri\\Kamui\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mohsen Bagheri",
+            "email": "bagherimohsenbagheri@gmail.com"
+        }
+    ],
+    "require": {}
+}
