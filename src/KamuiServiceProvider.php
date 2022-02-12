@@ -16,8 +16,8 @@ class KamuiServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/migrations');
 
         $this->publishes([
-            __DIR__.'/config/config.php' => config_path('kamui.php'),
-        ]);
+            __DIR__.'/../config/config.php' => config_path('kamui.php'),
+        ], 'config');
 
         $this->app->bind(CommunicateServiceContract::class, function () {
             $driver = config('kamui.driver');
