@@ -4,7 +4,8 @@
 namespace Mohsenbagheri\Kamui\Services;
 
 
-use Mohsenbagheri\Kamui\Repositories\CommunicationServiceLogRepository;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 class RedisService extends BaseService
 {
@@ -13,4 +14,15 @@ class RedisService extends BaseService
     {
         return 'redis';
     }
+
+    public function send(string $key, array $data)
+    {
+        try {
+            Redis::publish($key, json_encode($data));
+            Log::info('data successfully sent', $data);
+        } catch (\Exception $e) {
+            Log::error($e);
+        }
+    }
+
 }

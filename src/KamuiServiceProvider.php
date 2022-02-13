@@ -3,6 +3,8 @@
 namespace Mohsenbagheri\Kamui;
 
 use Illuminate\Support\ServiceProvider;
+use Mohsenbagheri\Kamui\Commands\RabbitmqWorkerCommand;
+use Mohsenbagheri\Kamui\Commands\RedisWorkerCommand;
 use Mohsenbagheri\Kamui\Contracts\CommunicateServiceContract;
 use Mohsenbagheri\Kamui\Services\GrpcService;
 use Mohsenbagheri\Kamui\Services\RabbitmqService;
@@ -14,6 +16,13 @@ class KamuiServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadMigrationsFrom(__DIR__ . '/migrations');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                RedisWorkerCommand::class,
+                RabbitmqWorkerCommand::class
+            ]);
+        }
 
         $this->publishes([
             __DIR__.'/../config/config.php' => config_path('kamui.php'),
