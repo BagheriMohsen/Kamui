@@ -4,7 +4,7 @@ namespace Mohsenbagheri\Kamui\Commands;
 
 use Illuminate\Console\Command;
 
-class RabbitmqWorkerCommand extends Command
+class CommunicateRabbitmqWorkerCommand extends Command
 {
 
     protected $signature = 'worker:rabbitmq';

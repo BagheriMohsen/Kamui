@@ -3,12 +3,14 @@
 
 namespace Mohsenbagheri\Kamui\Models;
 
+
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
-class CommunicationServiceLog extends Model
+class CommunicationUpLog extends Model
 {
-    protected $table = 'communication_service_logs';
+    public $table = 'communication_up_logs';
+    public $timestamps = false;
 
     protected function payload(): Attribute
     {

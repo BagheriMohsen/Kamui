@@ -6,10 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
     public function up()
     {
-        Schema::create('communication_service_logs', function (Blueprint $table) {
+        Schema::create('communication_logs', function (Blueprint $table) {
             $table->id();
             $table->string('driver');
             $table->longText('payload');
@@ -17,9 +21,13 @@ return new class extends Migration
         });
     }
 
-
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::dropIfExists('communication_service_logs');
+        Schema::dropIfExists('communication_logs');
     }
 };

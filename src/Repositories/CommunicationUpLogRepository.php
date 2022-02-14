@@ -4,9 +4,9 @@
 namespace Mohsenbagheri\Kamui\Repositories;
 
 
-use Mohsenbagheri\Kamui\Models\CommunicationServiceLog;
+use Mohsenbagheri\Kamui\Models\CommunicationUpLog;
 
-class CommunicationServiceLogRepository extends BaseRepository
+class CommunicationUpLogRepository extends BaseRepository
 {
 
     public function getFieldsSearchable(): array
@@ -16,6 +16,6 @@ class CommunicationServiceLogRepository extends BaseRepository
 
     public function model(): string
     {
-        return CommunicationServiceLog::class;
+        return CommunicationUpLog::class;
     }
 }

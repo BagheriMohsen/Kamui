@@ -3,14 +3,14 @@
 
 namespace Mohsenbagheri\Kamui\Services;
 
-use Mohsenbagheri\Kamui\Repositories\CommunicationServiceLogRepository;
+use Mohsenbagheri\Kamui\Repositories\CommunicationLogRepository;
 
 abstract class BaseService
 {
 
-    abstract public function driver(): string;
+    abstract public function repository(): string;
 
-    public CommunicationServiceLogRepository $repository;
+    public $repository;
 
     public function __construct()
     {
@@ -19,7 +19,7 @@ abstract class BaseService
 
     public function makeRepository()
     {
-        $this->repository = resolve(CommunicationServiceLogRepository::class);
+        $this->repository = resolve($this->repository());
     }
 
     public function create(array $data)
