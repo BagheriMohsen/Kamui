@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('communication_up_logs', function (Blueprint $table) {
             $table->id();
             $table->string('status');
+            $table->string('driver');
             $table->longText('payload')->nullable();
             $table->timestamp('date');
         });

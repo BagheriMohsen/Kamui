@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
+use Mohsenbagheri\Kamui\Models\CommunicationUpLog;
 use Mohsenbagheri\Kamui\Services\CommunicationUpLogService;
 
 
@@ -54,13 +55,21 @@ class CommunicateRedisWorkerCommand extends Command
         try {
             $logMessage = sprintf('redis worker listen:%s', implode(',', $keys));
             $this->info($logMessage);
-            $communicationUpLogService->create(['status' => 'up', 'payload' => $logMessage]);
+            $communicationUpLogService->create([
+                'driver' => CommunicationUpLog::DRIVER_REDIS,
+                'status' => CommunicationUpLog::STATUS_UP,
+                'payload' => $logMessage
+            ]);
             Redis::subscribe($keys, function (string $message) use ($controller, $method) {
                 $message = json_decode($message);
                 $controller->$method((object)$message);
             });
         } catch (\Exception $e) {
-            Log::error($e);
+            $communicationUpLogService->create([
+                'driver' => CommunicationUpLog::DRIVER_REDIS,
+                'status' => CommunicationUpLog::STATUS_DOWN,
+                'payload' => $e
+            ]);
         }
 
         return 0;
