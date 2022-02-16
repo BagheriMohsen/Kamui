@@ -53,7 +53,7 @@ class CommunicateRedisWorkerCommand extends Command
 
         $communicationUpLogService = resolve(CommunicationUpLogService::class);
         try {
-            $logMessage = sprintf('redis worker listen:%s', implode(',', $keys));
+            $logMessage = sprintf('worker listen:%s', implode(',', $keys));
             $this->info($logMessage);
             $communicationUpLogService->create([
                 'driver' => CommunicationUpLog::DRIVER_REDIS,
