@@ -19,6 +19,7 @@ This service helps you to communicate between services
     composer require spatie/laravel-signal-aware-command
     composer require mohsenbagheri/kamui
     php artisan vendor:publish
+    php artisan migrate
     
 ## Basic usage
  
