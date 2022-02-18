@@ -52,7 +52,7 @@ controller
     
         public function subscribe(object $data)
         {
-            Log::info(json_encode($data));
+            Log::info("data", $data);
         }
     }
 

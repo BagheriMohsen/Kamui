@@ -2,9 +2,7 @@
 
 namespace Mohsenbagheri\Kamui\Commands;
 
-use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Route;
-use JetBrains\PhpStorm\NoReturn;
 use Mohsenbagheri\Kamui\Models\CommunicationUpLog;
 use Mohsenbagheri\Kamui\Services\CommunicationUpLogService;
 use PhpAmqpLib\Connection\AMQPStreamConnection;

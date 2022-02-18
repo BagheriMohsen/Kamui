@@ -36,7 +36,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Mohsenbagheri\\Kamui\\Providers\\KamuiServiceProvider"
+                "Mohsenbagheri\\Kamui\\KamuiServiceProvider"
             ]
         }
     }
