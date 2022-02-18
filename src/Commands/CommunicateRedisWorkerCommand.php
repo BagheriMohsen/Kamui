@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 use Mohsenbagheri\Kamui\Models\CommunicationUpLog;
 use Mohsenbagheri\Kamui\Services\CommunicationUpLogService;
+use Spatie\SignalAwareCommand\SignalAwareCommand;
 
 
-class CommunicateRedisWorkerCommand extends Command
+class CommunicateRedisWorkerCommand extends SignalAwareCommand
 {
 
     protected $signature = 'worker:redis {keys?} {routeName?}';
@@ -21,7 +22,7 @@ class CommunicateRedisWorkerCommand extends Command
         parent::__construct();
     }
 
-    public function handle(): int
+    public function handle(CommunicationUpLogService $communicationUpLogService): int
     {
         $keys = $this->argument('keys');
         if (is_null($keys)) {
@@ -51,27 +52,26 @@ class CommunicateRedisWorkerCommand extends Command
         $controller = resolve($class);
         $keys = explode(',', $keys);
 
-        $communicationUpLogService = resolve(CommunicationUpLogService::class);
         try {
             $logMessage = sprintf('worker listen:%s', implode(',', $keys));
             $this->info($logMessage);
-            $communicationUpLogService->create([
-                'driver' => CommunicationUpLog::DRIVER_REDIS,
-                'status' => CommunicationUpLog::STATUS_UP,
-                'payload' => $logMessage
-            ]);
+            $communicationUpLogService->serviceUp(CommunicationUpLog::DRIVER_REDIS, $logMessage);
             Redis::subscribe($keys, function (string $message) use ($controller, $method) {
                 $message = json_decode($message);
                 $controller->$method((object)$message);
             });
         } catch (\Exception $e) {
-            $communicationUpLogService->create([
-                'driver' => CommunicationUpLog::DRIVER_REDIS,
-                'status' => CommunicationUpLog::STATUS_DOWN,
-                'payload' => $e
-            ]);
+            $communicationUpLogService->serviceDown(CommunicationUpLog::DRIVER_REDIS, $e);
         }
 
         return 0;
+    }
+
+    public function onSigint()
+    {
+        $communicationUpLogService = resolve(CommunicationUpLogService::class);
+        $message = "command stop by using Ctrl + C sigint";
+        $communicationUpLogService->serviceDown(CommunicationUpLog::DRIVER_REDIS, $message);
+        exit();
     }
 }

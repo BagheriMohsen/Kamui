@@ -21,8 +21,9 @@
         }
     ],
     "require": {
-        "php": "8.1.*",
-        "laravel/framework": "9.*"
+        "php": "8.0.*",
+        "laravel/framework": "9.*",
+        "spatie/laravel-signal-aware-command": "^1.2"
     },
     "scripts": {
         "test": "vendor/bin/phpunit",

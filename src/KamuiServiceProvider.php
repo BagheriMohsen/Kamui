@@ -10,7 +10,7 @@ class KamuiServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../migrations');
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -20,7 +20,7 @@ class KamuiServiceProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__.'/../config/config.php' => config_path('kamui.php'),
+            __DIR__.'/../config/kamui.php' => config_path('kamui.php'),
         ], 'config');
 
     }
