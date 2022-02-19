@@ -10,11 +10,14 @@ class CommunicationLog extends Model
 {
     protected $table = 'communication_logs';
 
-    protected function payload(): Attribute
+    public function setPayloadAttribute($value)
     {
-        return new Attribute(
-            get: fn ($value) => json_encode($value),
-            set: fn ($value) => json_decode($value),
-        );
+        return $this->attributes['payload'] = json_decode($value);
     }
+
+    public function getPayloadAttribute($value)
+    {
+        return $this->attributes['payload'] = json_encode($value);
+    }
+
 }
